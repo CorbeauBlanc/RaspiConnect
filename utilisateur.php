@@ -102,18 +102,18 @@
                     }
                 }
                 function titre2(fichier) {
-                    fichier.replace(.*, '');
+                    fichier.replace(/^./, '');
                     document.getElementById('titre2').value = fichier;
                 }
                 function validation() {
                     var url = document.getElementById('url');
-                    var fichier
-                    var titre1 = document.getElementById('titre');
-                    var titre2
-                    if (url.value == '') {
-                        alert("Vous devez entrer une url!");
+                    var file = document.getElementById('file');
+                    var titre1 = document.getElementById('titre1');
+                    var titre2 = document.getElementById('titre2');
+                    if (url.value=='' && file.value=='') {
+                        alert("Vous devez entrer un média!");
                         return false;
-                    } else if (titre.value == '') {
+                    } else if (titre1.value=='' && titre2.value=='') {
                         alert("Vous devez entrer un titre!");
                         return false;
                     } else return true;
@@ -125,14 +125,14 @@
                     <li><a data-toggle="tab" href="#fichier">Ajouter un fichier</a></li>
                 </ul>
                 
-                <div class="tab-content">
+                <div class="tab-content" style="color: oldlace">
                     <div id="adresse" class="tab-pane fade in active">
                         <form class="form-group" method="post" action="ajouter.php" onsubmit="return validation()">
                             <label for="url">Url :</label>
                             <input type="url" class="form-control" id="url" name="url" onchange="titre1(this.value)" value=""/>
                             <label for="titre1">Titre :</label>
-                            <input type="text" class="form-control" id="titre1" name="titre" value=""/>
-                            <iframe style="visibility: hidden; height: 0px" src="" onload="document.getElementById('titre').value=this.contentDocument.body.innerHTML" id="titre_preview"></iframe>
+                            <input type="text" class="form-control" id="titre1" name="titre" value="" />
+                            <iframe style="visibility: hidden; height: 0px" src="" onload="document.getElementById('titre1').value=this.contentDocument.body.innerHTML" id="titre_preview"></iframe>
                             <button type="submit" class="btn btn-success btn-block btn-swag-green">Valider</button>
                         </form>
                     </div>
@@ -141,7 +141,7 @@
                             <label for="file">Fichier :</label>
                             <input type="file" class="form-control" id="file" name="file" accept="audio/*" onchange="titre2(this.value)" />
                             <label for="titre2">Titre :</label>
-                            <input type="text" class="form-control" id="titre2" name="titre" value=""/>
+                            <input type="text" class="form-control" id="titre2" name="titre" value=""/><br>
                             <button type="submit" class="btn btn-success btn-block btn-swag-green">Valider</button>
                         </form>
                     </div>

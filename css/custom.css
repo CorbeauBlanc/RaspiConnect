@@ -124,10 +124,16 @@ h2 {
     border-width: 2px;
 }
 
-#url, #titre {
+#url, #titre1, #file, #titre2, .nav-tabs > li.active > a, .nav-tabs > li.active > a:focus {
     background-color: rgba(0,0,200,0.2);
     color: oldlace;
 }
+.nav-tabs > li.active > a:hover {
+    background-color: rgba(50,50,200,0.7);
+    color: oldlace;
+}
+
+.nav-tabs > li > a { color: oldlace }
 
 #preview {
     width: 100%;

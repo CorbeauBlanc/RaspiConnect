@@ -78,9 +78,9 @@
                 </form>
             </center>
             <br>
-            <button class="btn btn-lg btn-block btn-success btn-swag-green" style="font-family: zekton" data-toggle='collapse' data-target='#ajouter'>Ajouter un lien</button>
+            <button class="btn btn-lg btn-block btn-success btn-swag-green" style="font-family: zekton" data-toggle='collapse' data-target='#ajouter'>Ajouter un média</button>
             <script>
-                function preview(url) {
+                function titre1(url) {
                     document.getElementById('titre_preview').src='title.php?url=' + url;
                     
                     var youtube = url.indexOf('https://www.youtube.com/watch?v=');
@@ -101,9 +101,15 @@
                         document.getElementById('url').value = url;
                     }
                 }
+                function titre2(fichier) {
+                    fichier.replace(.*, '');
+                    document.getElementById('titre2').value = fichier;
+                }
                 function validation() {
                     var url = document.getElementById('url');
-                    var titre = document.getElementById('titre');
+                    var fichier
+                    var titre1 = document.getElementById('titre');
+                    var titre2
                     if (url.value == '') {
                         alert("Vous devez entrer une url!");
                         return false;
@@ -113,14 +119,34 @@
                     } else return true;
                 }
             </script>
-            <form id="ajouter" class="collapse form-group" style="font-family: zekton" method="post" action="index.php" onsubmit="return validation()">
-                <label for="url">Adresse url :</label>
-                <input type="text" class="form-control" id="url" name="url" onchange="preview(this.value)" value=""/>
-                <label for="titre">Titre :</label>
-                <input type="text" class="form-control" id="titre" name="titre" value=""/>
-                <iframe style="visibility: hidden; height: 0px" src="" onload="document.getElementById('titre').value=this.contentDocument.body.innerHTML" id="titre_preview"></iframe>
-                <button type="submit" class="btn btn-success btn-block btn-swag-green">Valider</button>
-            </form>
+            <div id="ajouter" class="collapse" style="font-family: zekton">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a data-toggle="tab" href="#adresse">Ajouter une adresse</a></li>
+                    <li><a data-toggle="tab" href="#fichier">Ajouter un fichier</a></li>
+                </ul>
+                
+                <div class="tab-content">
+                    <div id="adresse" class="tab-pane fade in active">
+                        <form class="form-group" method="post" action="ajouter.php" onsubmit="return validation()">
+                            <label for="url">Url :</label>
+                            <input type="url" class="form-control" id="url" name="url" onchange="titre1(this.value)" value=""/>
+                            <label for="titre1">Titre :</label>
+                            <input type="text" class="form-control" id="titre1" name="titre" value=""/>
+                            <iframe style="visibility: hidden; height: 0px" src="" onload="document.getElementById('titre').value=this.contentDocument.body.innerHTML" id="titre_preview"></iframe>
+                            <button type="submit" class="btn btn-success btn-block btn-swag-green">Valider</button>
+                        </form>
+                    </div>
+                    <div id="fichier" class="tab-pane fade">
+                        <form class="form-group" method="post" action="ajouter.php" enctype="multipart/form-data" onsubmit="return validation()">
+                            <label for="file">Fichier :</label>
+                            <input type="file" class="form-control" id="file" name="file" accept="audio/*" onchange="titre2(this.value)" />
+                            <label for="titre2">Titre :</label>
+                            <input type="text" class="form-control" id="titre2" name="titre" value=""/>
+                            <button type="submit" class="btn btn-success btn-block btn-swag-green">Valider</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <div class="col-lg-3" style="font-family: zekton">
@@ -146,18 +172,6 @@
                                         $request->execute();
                                     } else
                                         echo '<div class="alert alert-danger">Refusé! Vous n\'êtes pas l\'auteur de cet ajout.<a href="#" class="close" data-dismiss="alert">&times;</a></div>';
-                                }
-                                elseif ($_SERVER['REQUEST_METHOD']=='POST' && isset($_POST['url'])) {
-                                    $test = "SELECT id FROM media WHERE statut = 'lecture' OR statut = 'stop'";
-                                    $request = $db->prepare($test);
-                                    $request->execute();
-                                    
-                                    if ($result = $request->fetch(PDO::FETCH_ASSOC))
-                                        $ajout = "INSERT INTO `media` (`id`, `url`, `titre`, `utilisateur`) VALUES (NULL, '$_POST[url]', '$_POST[titre]', '$_SESSION[user]')";
-                                    else 
-                                        $ajout = "INSERT INTO `media` (`id`, `statut`, `url`, `titre`, `utilisateur`) VALUES (NULL, 'lecture', '$_POST[url]', '$_POST[titre]', '$_SESSION[user]')";
-                                    $request = $db->prepare($ajout);
-                                    $request->execute();
                                 }
 
                                 $media = "SELECT id, titre FROM media WHERE statut!='lecture' AND statut!='précédent' AND statut!='stop'";

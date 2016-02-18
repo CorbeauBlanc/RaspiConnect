@@ -1,7 +1,7 @@
 <h1>
 <?php
     $db = new pdo('mysql:host=localhost;dbname=raspi_connect', 'root', 'password');
-    if ($_SESSION['type']!='raspberry') header('location:/RaspiConnect/');
+    if ($_SESSION['type']!='raspberry') header('location:/RaspiConnect/index.php');
     
     if ($_SERVER['REQUEST_METHOD']=='POST') {
         $clean = "DELETE FROM media";

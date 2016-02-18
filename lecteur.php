@@ -4,12 +4,12 @@
     $db = new pdo('mysql:host=localhost;dbname=raspi_connect', 'root', 'password');
     switch ($_POST['event']) {
         case 'prec':
-            $prec = "UPDATE media SET statut = '' WHERE statut = 'lecture'";
-            $request = $db->prepare($prec);
-            $request->execute();
-            $prec = "UPDATE media SET statut = 'lecture' WHERE statut = 'précédent'";
-            $request = $db->prepare($prec);
-            $request->execute();
+            $prec1 = "UPDATE media SET statut = '' WHERE statut = 'lecture'";
+            $request1 = $db->prepare($prec1);
+            $request1->execute();
+            $prec2 = "UPDATE media SET statut = 'lecture' WHERE statut = 'précédent'";
+            $request2 = $db->prepare($prec2);
+            $request2->execute();
             break;
         
         case 'stop':
@@ -28,27 +28,28 @@
             break;
         
         case 'suiv':
-            $suiv = "SELECT id FROM media WHERE id IN ( SELECT MIN(id) FROM media WHERE id > ( SELECT id FROM media WHERE statut = 'lecture'))";
-            $request = $db->prepare($suiv);
-            $request->execute();
-            if ($result = $request->fetch(PDO::FETCH_ASSOC)) {
+            $suiv1 = "SELECT id FROM media WHERE id IN ( SELECT MIN(id) FROM media WHERE id > ( SELECT id FROM media WHERE statut = 'lecture'))";
+            $request1 = $db->prepare($suiv1);
+            $request1->execute();
+            if ($result = $request1->fetch(PDO::FETCH_ASSOC)) {
                 $id = $result['id'];
                 
-                $suiv = "SELECT id FROM media WHERE statut = 'précédent'";
-                $request = $db->prepare($suiv);
-                $request->execute();
-                if ($result = $request->fetch(PDO::FETCH_ASSOC)) {
-                    $suiv = "DELETE FROM media WHERE statut = 'précédent'";
-                    $request = $db->prepare($suiv);
-                    $request->execute();
+                $suiv2 = "SELECT url FROM media WHERE statut = 'précédent'";
+                $request2 = $db->prepare($suiv2);
+                $request2->execute();
+                if ($result = $request2->fetch(PDO::FETCH_ASSOC)) {
+                    if (file_exists($result['url'])) unlink ($result['url']);
+                    $suiv3 = "DELETE FROM media WHERE statut = 'précédent'";
+                    $request3 = $db->prepare($suiv3);
+                    $request3->execute();
                 }
-                $suiv = "UPDATE media SET statut = 'précédent' WHERE statut = 'lecture'";
-                $request = $db->prepare($suiv);
-                $request->execute();
+                $suiv4 = "UPDATE media SET statut = 'précédent' WHERE statut = 'lecture'";
+                $request4 = $db->prepare($suiv4);
+                $request4->execute();
                 
-                $suiv = "UPDATE media SET statut = 'lecture' WHERE id = $id";
-                $request = $db->prepare($suiv);
-                $request->execute();
+                $suiv5 = "UPDATE media SET statut = 'lecture' WHERE id = $id";
+                $request5 = $db->prepare($suiv5);
+                $request5->execute();
             }
     }
     header('location:/RaspiConnect/index.php');

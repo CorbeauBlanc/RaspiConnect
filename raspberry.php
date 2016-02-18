@@ -4,9 +4,15 @@
     if ($_SESSION['type']!='raspberry') header('location:/RaspiConnect/index.php');
     
     if ($_SERVER['REQUEST_METHOD']=='POST') {
-        $clean = "DELETE FROM media";
-        $request = $db->prepare($clean);
-        $request->execute();
+        $clean1 = "SELECT url FROM media";
+        $request1 = $db->prepare($clean1);
+        $request1->execute();
+        while ($result = $request1->fetch(PDO::FETCH_ASSOC))
+            if (file_exists($result['url'])) unlink ($result['url']);
+        
+        $clean2 = "DELETE FROM media";
+        $request2 = $db->prepare($clean2);
+        $request2->execute();
     }
 ?>
 </h1>

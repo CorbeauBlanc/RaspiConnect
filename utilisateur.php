@@ -79,8 +79,14 @@
             </center>
             <br>
             <button class="btn btn-lg btn-block btn-success btn-swag-green" style="font-family: zekton" data-toggle='collapse' data-target='#ajouter'>Ajouter un média</button>
-            <script>
-                function titre1(url) {
+            <div id="ajouter" class="collapse" style="font-family: zekton">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a data-toggle="tab" href="#adresse">Ajouter une adresse</a></li>
+                    <li><a data-toggle="tab" href="#fichier">Ajouter un fichier</a></li>
+                </ul>
+                
+                <script>
+                function title1(url) {
                     document.getElementById('titre_preview').src='title.php?url=' + url;
                     
                     var youtube = url.indexOf('https://www.youtube.com/watch?v=');
@@ -101,8 +107,8 @@
                         document.getElementById('url').value = url;
                     }
                 }
-                function titre2(fichier) {
-                    fichier.replace(/^./, '');
+                function title2(fichier) {
+                    fichier = fichier.replace('C:\\fakepath\\', '');
                     document.getElementById('titre2').value = fichier;
                 }
                 function validation() {
@@ -118,18 +124,12 @@
                         return false;
                     } else return true;
                 }
-            </script>
-            <div id="ajouter" class="collapse" style="font-family: zekton">
-                <ul class="nav nav-tabs">
-                    <li class="active"><a data-toggle="tab" href="#adresse">Ajouter une adresse</a></li>
-                    <li><a data-toggle="tab" href="#fichier">Ajouter un fichier</a></li>
-                </ul>
-                
+                </script>
                 <div class="tab-content" style="color: oldlace">
                     <div id="adresse" class="tab-pane fade in active">
                         <form class="form-group" method="post" action="ajouter.php" onsubmit="return validation()">
                             <label for="url">Url :</label>
-                            <input type="url" class="form-control" id="url" name="url" onchange="titre1(this.value)" value=""/>
+                            <input type="url" class="form-control" id="url" name="url" onchange="title1(this.value)" value=""/>
                             <label for="titre1">Titre :</label>
                             <input type="text" class="form-control" id="titre1" name="titre" value="" />
                             <iframe style="visibility: hidden; height: 0px" src="" onload="document.getElementById('titre1').value=this.contentDocument.body.innerHTML" id="titre_preview"></iframe>
@@ -138,8 +138,9 @@
                     </div>
                     <div id="fichier" class="tab-pane fade">
                         <form class="form-group" method="post" action="ajouter.php" enctype="multipart/form-data" onsubmit="return validation()">
+                            <input type="hidden" name="MAX_FILE_SIZE" value="20000000" />
                             <label for="file">Fichier :</label>
-                            <input type="file" class="form-control" id="file" name="file" accept="audio/*" onchange="titre2(this.value)" />
+                            <input type="file" class="form-control" id="file" name="uploadFile" accept="audio/*" onchange="title2(this.value)" />
                             <label for="titre2">Titre :</label>
                             <input type="text" class="form-control" id="titre2" name="titre" value=""/><br>
                             <button type="submit" class="btn btn-success btn-block btn-swag-green">Valider</button>
@@ -162,11 +163,12 @@
                             <?php
                                 $db = new pdo('mysql:host=localhost;dbname=raspi_connect', 'root', 'password');
                                 if ($_SERVER['REQUEST_METHOD']=='POST' && isset($_POST['key'])) {
-                                    $test = "SELECT utilisateur FROM media WHERE id = $_POST[key]";
+                                    $test = "SELECT utilisateur, url FROM media WHERE id = $_POST[key]";
                                     $request = $db->prepare($test);
                                     $request->execute();
                                     $result = $request->fetch(PDO::FETCH_ASSOC);
                                     if ($result['utilisateur'] == $_SESSION['user']) {
+                                        if (file_exists($result['url'])) unlink ($result['url']);
                                         $suppr = "DELETE FROM media WHERE id = $_POST[key]";
                                         $request = $db->prepare($suppr);
                                         $request->execute();

@@ -1,14 +1,15 @@
 <?php
+
     if ($_SERVER['REQUEST_METHOD']!='POST') header('location:/RaspiConnect/index.php');
     
     $db = new pdo('mysql:host=localhost;dbname=raspi_connect', 'root', 'password');
     if (isset($_POST['url']))
         $media = $_POST['url'];
     
-    elseif (isset ($_POST['file'])) {
+    else {
         $directory = 'uploads/';
-        $full_path = $directory . basename($_FILES["fileToUpload"]["name"]);
-        if (!file_exists($full_path) && move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $full_path))
+        $full_path = $directory . basename($_FILES["uploadFile"]["name"]);
+        if (!file_exists($full_path) && move_uploaded_file($_FILES["uploadFile"]["tmp_name"], $full_path))
             $media = $full_path;
         else {
             echo "Erreur lors de l'ajout du fichier. Cliquez sur ce lien pour revenir à l'accueil : <a href='index.php'>Acceuil</a>";
@@ -29,5 +30,4 @@
         
         header('location:/RaspiConnect/index.php');
     }
-
 ?>

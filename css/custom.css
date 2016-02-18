@@ -1,0 +1,136 @@
+@font-face {
+    font-family: zekton;
+    src: url(../fonts/zekton.ttf);
+}
+@font-face {
+    font-family: neuropol;
+    src: url(../fonts/neuropol.ttf);
+}
+
+body {
+    background-image: url(../background.jpg);
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+h1 {
+    text-align: center;
+    color: oldlace;
+    font-size: 40px;
+    font-family: zekton;
+}
+
+h2 {
+    text-align: center;
+    color: oldlace;
+    font-size: 25px;
+    font-family: zekton;
+}
+
+.button-text-lg {
+    text-align: center;
+    font-size: 20px;
+    font-family: zekton;
+}
+
+.button-text-xs {
+    text-align: center;
+    font-size: 10px;
+    font-family: zekton;
+}
+
+.panel-default {
+    background-color: rgba(0,0,0,0);
+}
+
+.panel-default > .panel-heading {
+    font-size: 20px;
+    text-align: center;
+    background-color: rgba(253, 245, 230, 0.7);
+}
+
+.panel-body {
+    color: oldlace;
+    font-size: 15px;
+    background-color: rgba(117, 129, 130, 0.4);
+}
+
+#prec-xs, #stop-xs, #suiv-xs {
+    color: oldlace;
+    text-decoration: none;
+    text-align: center;
+    font-size: 10vw;
+}
+
+#prec-lg, #stop-lg, #suiv-lg {
+    color: oldlace;
+    text-decoration: none;
+    text-align: center;
+    font-size: 75px;
+}
+
+.btn-media-xs {
+    width: 20vw;
+    height: 20vw;
+    max-width: 135px;
+    max-height: 135px;
+    background: radial-gradient(#b956a4 20%, #99008f 80%);
+    display: inline-block;
+    border: 1vw oldlace solid;
+    border-radius: 30%;
+    box-shadow: 0px 2vw slategrey;
+}
+
+.btn-media-xs:hover { background: radial-gradient(#a2448d 20%, #66005f 80%);}
+.btn-media-xs:active {
+    background: #66005f;
+    box-shadow: 0px 1vw darkslategrey;
+    transform: translateY(1vw);
+}
+
+.btn-media-lg {
+    width: 135px;
+    height: 135px;
+    background: radial-gradient(#b956a4 20%, #99008f 80%);
+    display: inline-block;
+    border: 7px oldlace solid;
+    border-radius: 30%;
+    box-shadow: 0px 14px slategrey;
+}
+
+.btn-media-lg:hover { background: radial-gradient(#a2448d 20%, #66005f 80%);}
+.btn-media-lg:active {
+    background: #66005f;
+    box-shadow: 0px 6px darkslategrey;
+    transform: translateY(8px);
+}
+
+.titre {
+    font-family: neuropol;
+    font-size: xx-large;
+    color: oldlace;
+}
+
+.btn-swag-green {
+    transition-duration: 0.2s;
+    background-color: rgba(0,180,0,.2);
+    border-width: 2px;
+}
+
+.btn-swag-red {
+    transition-duration: 0.2s;
+    background-color: rgba(195,0,0,.2);
+    border-width: 2px;
+}
+
+#url, #titre {
+    background-color: rgba(0,0,200,0.2);
+    color: oldlace;
+}
+
+#preview {
+    width: 100%;
+    border: none;
+    margin-top: 5%;
+}

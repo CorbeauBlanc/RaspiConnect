@@ -103,7 +103,7 @@
                     else if (deezer != -1) {
                         var id = url.replace('http://www.deezer.com/track/', '');
                         id = id.slice(0, id.indexOf('?'));
-                        url = "http://www.deezer.com/plugins/player?format=classic&autoplay=true&playlist=false&color=007FEB&layout=dark&type=tracks&id=" + id + "app_id=1";
+                        url = "http://www.deezer.com/plugins/player?format=classic&autoplay=true&playlist=false&color=007FEB&layout=dark&type=tracks&id=" + id + "&app_id=1";
                         document.getElementById('url').value = url;
                     }
                 }

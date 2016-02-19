@@ -40,7 +40,7 @@
                 if (($result = $request->fetch(PDO::FETCH_ASSOC)) && ($result['statut']!='stop'))
                     echo $result['url'];
                 else echo 'vinyl.jpg';
-            ?>" style="width: 100%; height: 40vw; border: none"></iframe>
+                ?>" allowfullscreen allowtransparency scrolling="no" style="width: 100%; height: 40vw; border: none"></iframe>
         <form method="post" action="index.php">
             <button type="submit" class="btn btn-lg btn-danger" style="font-family: zekton; width: 49%; margin-left: 1%">Vider la liste de lecture</button>
             <button type="button" class="btn btn-lg btn-default" style="font-family: zekton; width: 49%" onclick="popup = window.open(document.getElementById('media').src)">
